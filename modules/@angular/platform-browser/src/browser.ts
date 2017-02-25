@@ -9,6 +9,7 @@
 import {CommonModule, PlatformLocation, ɵPLATFORM_BROWSER_ID as PLATFORM_BROWSER_ID} from '@angular/common';
 import {APP_ID, ApplicationModule, ErrorHandler, ModuleWithProviders, NgModule, Optional, PLATFORM_ID, PLATFORM_INITIALIZER, PlatformRef, Provider, RendererFactoryV2, RootRenderer, Sanitizer, SkipSelf, Testability, createPlatformFactory, platformCore} from '@angular/core';
 
+import {BROWSER_ANIMATIONS_PROVIDERS} from '../animations/src/providers';
 import {AnimationDriver} from '../src/dom/animation_driver';
 import {WebAnimationsDriver} from '../src/dom/web_animations_driver';
 
@@ -98,6 +99,7 @@ export function _resolveDefaultAnimationDriver(): AnimationDriver {
     ELEMENT_PROBE_PROVIDERS,
     Meta,
     Title,
+    BROWSER_ANIMATIONS_PROVIDERS,
   ],
   exports: [CommonModule, ApplicationModule]
 })

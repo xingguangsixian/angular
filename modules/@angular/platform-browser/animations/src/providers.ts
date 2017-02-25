@@ -7,7 +7,7 @@
  */
 
 import {Injectable, NgZone, Provider, RendererFactoryV2} from '@angular/core';
-import {ɵDomRendererFactoryV2} from '@angular/platform-browser';
+import {DomRendererFactoryV2} from '../../src/dom/dom_renderer';
 
 import {AnimationEngine} from './animation_engine';
 import {AnimationStyleNormalizer} from './dsl/style_normalization/animation_style_normalizer';
@@ -37,7 +37,7 @@ export function instantiateDefaultStyleNormalizer() {
 }
 
 export function instantiateRendererFactory(
-    renderer: ɵDomRendererFactoryV2, engine: AnimationEngine, zone: NgZone) {
+    renderer: DomRendererFactoryV2, engine: AnimationEngine, zone: NgZone) {
   return new AnimationRendererFactory(renderer, engine, zone);
 }
 
@@ -51,7 +51,7 @@ export const BROWSER_ANIMATIONS_PROVIDERS: Provider[] = [
   {provide: AnimationEngine, useClass: InjectableAnimationEngine}, {
     provide: RendererFactoryV2,
     useFactory: instantiateRendererFactory,
-    deps: [ɵDomRendererFactoryV2, AnimationEngine, NgZone]
+    deps: [DomRendererFactoryV2, AnimationEngine, NgZone]
   }
 ];
 
@@ -63,6 +63,6 @@ export const BROWSER_NOOP_ANIMATIONS_PROVIDERS: Provider[] = [
   {provide: AnimationEngine, useClass: NoopAnimationEngine}, {
     provide: RendererFactoryV2,
     useFactory: instantiateRendererFactory,
-    deps: [ɵDomRendererFactoryV2, AnimationEngine, NgZone]
+    deps: [DomRendererFactoryV2, AnimationEngine, NgZone]
   }
 ];
