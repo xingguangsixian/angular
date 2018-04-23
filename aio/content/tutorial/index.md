@@ -1,82 +1,70 @@
-@title
-Tutorial: Tour of Heroes
+<h1 class="no-toc">Tutorial: Tour of Heroes</h1>
 
-@intro
-The Tour of Heroes tutorial takes you through the steps of creating an Angular application in TypeScript.
+The _Tour of Heroes_ tutorial covers the fundamentals of Angular.  
+In this tutorial you will build an app that helps a staffing agency manage its stable of heroes.
 
-@description
-Our grand plan for this tutorial is to build an app to help a staffing agency manage its stable of heroes.
-Even heroes need to find work.
+This basic app has many of the features you'd expect to find in a data-driven application.
+It acquires and displays a list of heroes, edits a selected hero's detail, and navigates among different views of heroic data.
 
-Of course we'll only make a little progress in this tutorial. What we do build will
-have many of the features we expect to find in a full-blown, data-driven application: acquiring and displaying
-a list of heroes, editing a selected hero's detail, and navigating among different
-views of heroic data.
+By the end of the tutorial you will be able to do the following:
 
-The Tour of Heroes covers the core fundamentals of Angular.
-We’ll use built-in directives to show/hide elements and display lists of hero data.
-We’ll create a component to display hero details and another to show an array of heroes.
-We'll use one-way data binding for read-only data. We'll add editable fields to update a model
-with two-way data binding. We'll bind component methods to user events like key strokes and clicks.
-We’ll learn to select a hero from a master list and edit that hero in the details view. We'll
-format data with pipes. We'll create a shared service to assemble our heroes. And we'll use routing to navigate among different views and their components.
+* Use built-in Angular directives to show and hide elements and display lists of hero data.
+* Create Angular components to display hero details and show an array of heroes.
+* Use one-way data binding for read-only data.
+* Add editable fields to update a model with two-way data binding.
+* Bind component methods to user events, like keystrokes and clicks.
+* Enable users to select a hero from a master list and edit that hero in the details view. 
+* Format data with pipes.
+* Create a shared service to assemble the heroes.
+* Use routing to navigate among different views and their components.
 
-We’ll learn enough core Angular to get started and gain confidence that
-Angular can do whatever we need it to do.
-We'll be covering a lot of ground at an introductory level but we’ll find plenty of links
-to chapters with greater depth.
+You'll learn enough Angular to get started and gain confidence that
+Angular can do whatever you need it to do. 
 
-Run the <live-example name="toh-6"></live-example>.
+After completing all tutorial steps, the final app will look like this <live-example name="toh-pt6"></live-example>.
 
-## The End Game
 
-Here's a visual idea of where we're going in this tour, beginning with the "Dashboard"
-view and our most heroic heroes:
+## What you'll build
 
-<figure class='image-display'>
-  <img src='/resources/images/devguide/toh/heroes-dashboard-1.png' alt="Output of heroes dashboard">  </img>
+Here's a visual idea of where this tutorial leads, beginning with the "Dashboard"
+view and the most heroic heroes:
+
+<figure>
+  <img src='generated/images/guide/toh/heroes-dashboard-1.png' alt="Output of heroes dashboard">
 </figure>
 
-Above the dashboard are two links ("Dashboard" and "Heroes").
-We could click them to navigate between this Dashboard and a Heroes view.
+You can click the two links above the dashboard ("Dashboard" and "Heroes")
+to navigate between this Dashboard view and a Heroes view.
 
-Instead we click the dashboard hero named "Magneta" and the router takes us to a "Hero Details" view
-of that hero where we can change the hero's name.
+If you click the dashboard hero "Magneta," the router opens a "Hero Details" view
+where you can change the hero's name.
 
-<figure class='image-display'>
-  <img src='/resources/images/devguide/toh/hero-details-1.png' alt="Details of hero in app">  </img>
+<figure>
+  <img src='generated/images/guide/toh/hero-details-1.png' alt="Details of hero in app">
 </figure>
 
-Clicking the "Back" button would return us to the "Dashboard".
-Links at the top can take us to either of the main views.
-We'll click "Heroes". The app takes to the "Heroes" master list view.
+Clicking the "Back" button returns you to the Dashboard.
+Links at the top take you to either of the main views.
+If you click "Heroes," the app displays the "Heroes" master list view.
 
-<figure class='image-display'>
-  <img src='/resources/images/devguide/toh/heroes-list-2.png' alt="Output of heroes list app">  </img>
+
+<figure>
+  <img src='generated/images/guide/toh/heroes-list-2.png' alt="Output of heroes list app">
 </figure>
 
-We click a different hero and the readonly mini-detail beneath the list reflects our new choice.
+When you click a different hero name, the read-only mini detail beneath the list reflects the new choice.
 
-We click the "View Details" button to drill into the
-editable details of our selected hero.
+You can click the "View Details" button to drill into the
+editable details of the selected hero.
 
-The following diagram captures all of our navigation options.
+The following diagram captures all of the navigation options.
 
-<figure class='image-display'>
-  <img src='/resources/images/devguide/toh/nav-diagram.png' alt="View navigations">  </img>
+<figure>
+  <img src='generated/images/guide/toh/nav-diagram.png' alt="View navigations">
 </figure>
 
-Here's our app in action
+Here's the app in action:
 
-<figure class='image-display'>
-  <img src='/resources/images/devguide/toh/toh-anim.gif' alt="Tour of Heroes in Action">  </img>
+<figure>
+  <img src='generated/images/guide/toh/toh-anim.gif' alt="Tour of Heroes in Action">
 </figure>
-
-
-## Up Next
-
-We’ll build this Tour of Heroes together, step by step.
-We'll motivate each step with a requirement that we've
-met in countless applications. Everything has a reason.
-
-And we’ll meet many of the core fundamentals of Angular along the way.

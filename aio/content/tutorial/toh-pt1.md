@@ -1,229 +1,256 @@
-@title
-The Hero Editor
+# The Hero Editor
 
-@intro
-We build a simple hero editor
+The application now has a basic title.
+Next you will create a new component to display hero information
+and place that component in the application shell.
 
-@description
-## Setup to develop locally
-Real application development takes place in a local development environment like your machine.
+## Create the heroes component
 
-Follow the [setup](../guide/setup.html) instructions for creating a new project
-named <ngio-ex path="angular-tour-of-heroes"></ngio-ex>
-after which the file structure should look like this:
-
-<aio-filetree>
-
-  <aio-folder>
-    angular-tour-of-heroes
-    <aio-folder>
-      src
-      <aio-folder>
-        app
-        <aio-file>
-          app.component.ts
-        </aio-file>
-
-
-        <aio-file>
-          app.module.ts
-        </aio-file>
-
-
-      </aio-folder>
-
-
-      <aio-file>
-        main.ts
-      </aio-file>
-
-
-      <aio-file>
-        index.html
-      </aio-file>
-
-
-      <aio-file>
-        styles.css
-      </aio-file>
-
-
-      <aio-file>
-        systemjs.config.js
-      </aio-file>
-
-
-      <aio-file>
-        tsconfig.json
-      </aio-file>
-
-
-    </aio-folder>
-
-
-    <aio-file>
-      node_modules ... 
-    </aio-file>
-
-
-    <aio-file>
-      package.json
-    </aio-file>
-
-
-  </aio-folder>
-
-
-</aio-filetree>
-
-When we're done with this first episode, the app runs like this <live-example></live-example>.
-
-## Keep the app transpiling and running
-We want to start the TypeScript compiler, have it watch for changes, and start our server. 
-Do this by entering the following command in the terminal window.
-
+Using the Angular CLI, generate a new component named `heroes`.
 
 <code-example language="sh" class="code-shell">
-  npm start  
-    
+  ng generate component heroes
 </code-example>
 
-This command runs the compiler in watch mode, starts the server, launches the app in a browser,
-and keeps the app running while we continue to build the Tour of Heroes.
+The CLI creates a new folder, `src/app/heroes/` and generates
+the three files of the  `HeroesComponent`.
 
-## Show our Hero
-We want to display Hero data in our app
+The `HeroesComponent` class file is as follows:
 
-Update the `AppComponent` so it has two properties: &nbsp; a `title` property for the application name and a `hero` property
-for a hero named "Windstorm".
-
-
-{@example 'toh-1/ts-snippets/app.component.snippets.pt1.ts' region='app-component-1'}
-
-Now update the template in the `@Component` decoration with data bindings to these new properties.
-
-
-{@example 'toh-1/ts-snippets/app.component.snippets.pt1.ts' region='show-hero'}
-
-The browser should refresh and display our title and hero.
-
-The double curly braces tell our app to read the `title` and `hero` properties from the component and render them.
-This is the "interpolation" form of one-way data binding.
-Learn more about interpolation in the [Displaying Data chapter](../guide/displaying-data.html).### Hero object
-
-At the moment, our hero is just a name.  Our hero needs more properties.
-Let's convert the `hero` from a literal string to a class.
-
-Create a `Hero` class with `id` and `name` properties.
-For now put this near the top of the `app.component.ts` file, just below the import statement.
-
-
-{@example 'toh-1/ts/src/app/app.component.ts' region='hero-class-1'}
-
-Now that we have a `Hero` class, let’s refactor our component’s `hero` property to be of type `Hero`.
-Then initialize it with an id of `1` and the name, "Windstorm".
-
-
-{@example 'toh-1/ts/src/app/app.component.ts' region='hero-property-1'}
-
-Because we changed the hero from a string to an object,
-we update the binding in the template to refer to the hero’s `name` property.
-
-
-{@example 'toh-1/ts-snippets/app.component.snippets.pt1.ts' region='show-hero-2'}
-
-The browser refreshes and continues to display our hero’s name.
-
-### Adding more HTML
-Displaying a name is good, but we want to see all of our hero’s properties.
-We’ll add a `<div>` for our hero’s `id` property and another `<div>` for our hero’s `name`.
-
-
-{@example 'toh-1/ts-snippets/app.component.snippets.pt1.ts' region='show-hero-properties'}
-
-Uh oh, our template string is getting long. We better take care of that to avoid the risk of making a typo in the template.
-
-### Multi-line template strings
-
-We could make a more readable template with string concatenation
-but that gets ugly fast, it is harder to read, and
-it is easy to make a spelling error. Instead,
-let’s take advantage of the template strings feature
-in ES2015 and TypeScript to maintain our sanity.
-
-Change the quotes around the template to back-ticks and
-put the `<h1>`, `<h2>` and `<div>` elements on their own lines.
-
-
-{@example 'toh-1/ts-snippets/app.component.snippets.pt1.ts' region='multi-line-strings'}
-
-
-## Editing Our Hero
-
-We want to be able to edit the hero name in a textbox.
-
-Refactor the hero name `<label>` with `<label>` and `<input>` elements as shown below:
-
-
-{@example 'toh-1/ts-snippets/app.component.snippets.pt1.ts' region='editing-Hero'}
-
-We see in the browser that the hero’s name does appear in the `<input>` textbox.
-But something doesn’t feel right.
-When we change the name, we notice that our change
-is not reflected in the `<h2>`. We won't get the desired behavior
-with a one-way binding to `<input>`.
-
-### Two-Way Binding
-
-We intend to display the name of the hero in the `<input>`, change it,
-and see those changes wherever we bind to the hero’s name.
-In short, we want two-way data binding.
-
-Before we can use two-way data binding for **form inputs**, we need to import the `FormsModule`
-package in our Angular module. We add it to the `NgModule` decorator's `imports` array. This array contains the list
-of external modules used by our application.
-Now we have included the forms package which includes `ngModel`.
-
-
-{@example 'toh-1/ts/src/app/app.module.ts'}
-
-
-Learn more about the `FormsModule` and `ngModel` in the
-[Forms](../guide/forms.html#ngModel) and
-[Template Syntax](../guide/template-syntax.html#ngModel) chapters.
-Let’s update the template to use the  **`ngModel`** built-in directive for two-way binding.
-
-Replace the `<input>` with the following HTML
-
-<code-example language="html">
-  &lt;input [(ngModel)]="hero.name" placeholder="name">  
-    
+<code-example 
+  path="toh-pt1/src/app/heroes/heroes.component.ts" region="v1" 
+  title="app/heroes/heroes.component.ts (initial version)" linenums="false">
 </code-example>
 
-The browser refreshes. We see our hero again. We can edit the hero’s name and
-see the changes reflected immediately in the `<h2>`.
+You always import the `Component` symbol from the Angular core library
+and annotate the component class with `@Component`.
 
-## The Road We’ve Travelled
-Let’s take stock of what we’ve built.
+`@Component` is a decorator function that specifies the Angular metadata for the component.
 
-* Our Tour of Heroes uses the double curly braces of interpolation (a kind of one-way data binding)
-to display the application title and properties of a `Hero` object.
-* We wrote a multi-line template using ES2015’s template strings to make our template readable.
-* We can both display and change the hero’s name after adding a two-way data binding to the `<input>` element
-using the built-in `ngModel` directive.
-* The `ngModel` directive also propagates changes to every other binding of the `hero.name`.
+The CLI generated three metadata properties:
 
-Run the <live-example></live-example> for this part.
+1. `selector`&mdash; the component's CSS element selector
+1. `templateUrl`&mdash; the location of the component's template file.
+1. `styleUrls`&mdash; the location of the component's private CSS styles.
 
-Here's the complete `app.component.ts` as it stands now:
+{@a selector}
+
+The [CSS element selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors),
+`'app-heroes'`, matches the name of the HTML element that identifies this component within a parent component's template.
+
+The `ngOnInit` is a [lifecycle hook](guide/lifecycle-hooks#oninit) 
+Angular calls `ngOnInit` shortly after creating a component.
+It's a good place to put initialization logic.
+
+Always `export` the component class so you can `import` it elsewhere ... like in the `AppModule`.
+
+### Add a _hero_ property
+
+Add a `hero` property to the `HeroesComponent` for a hero named "Windstorm."
+
+<code-example path="toh-pt1/src/app/heroes/heroes.component.ts" region="add-hero" title="heroes.component.ts (hero property)" linenums="false">
+</code-example>
+
+### Show the hero
+
+Open the `heroes.component.html` template file.
+Delete the default text generated by the Angular CLI and 
+replace it with a data binding to the new `hero` property.  
+
+<code-example path="toh-pt1/src/app/heroes/heroes.component.1.html" title="heroes.component.html" region="show-hero-1" linenums="false">
+</code-example>
+
+## Show the _HeroesComponent_ view
+
+To display the `HeroesComponent`, you must add it to the template of the shell `AppComponent`.
+
+Remember that `app-heroes` is the [element selector](#selector) for the `HeroesComponent`. 
+So add an `<app-heroes>` element to the `AppComponent` template file, just below the title.
+
+<code-example path="toh-pt1/src/app/app.component.html" title="src/app/app.component.html" linenums="false">
+</code-example>
+
+Assuming that the CLI `ng serve` command is still running,
+the browser should refresh and display both the application title and the hero name.
+
+## Create a Hero class
+
+A real hero is more than a name.
+
+Create a `Hero` class in its own file in the `src/app` folder.
+Give it `id` and `name` properties.
+
+<code-example path="toh-pt1/src/app/hero.ts"  title="src/app/hero.ts" linenums="false">
+</code-example>
 
 
-{@example 'toh-1/ts/src/app/app.component.ts' region='pt1'}
+Return to the `HeroesComponent` class and import the `Hero` class.
+
+Refactor the component's `hero` property to be of type `Hero`.
+Initialize it with an `id` of `1` and the name `Windstorm`.
+
+The revised `HeroesComponent` class file should look like this:
+
+<code-example path="toh-pt1/src/app/heroes/heroes.component.ts" linenums="false"
+  title= "src/app/heroes/heroes.component.ts">
+</code-example>
+
+The page no longer displays properly because you changed the hero from a string to an object.
+
+## Show the hero object
+
+Update the binding in the template to announce the hero's name
+and show both `id` and `name` in a details layout like this:
+
+<code-example 
+  path="toh-pt1/src/app/heroes/heroes.component.1.html"
+  region="show-hero-2" 
+  title="heroes.component.html (HeroesComponent's template)" linenums="false">
+</code-example>
+
+The browser refreshes and display's the hero's information.
+
+## Format with the _UppercasePipe_
+
+Modify the `hero.name` binding like this.
+<code-example
+  path="toh-pt1/src/app/heroes/heroes.component.html"
+  region="pipe">
+</code-example>
+
+The browser refreshes and now the hero's name is displayed in capital letters.
+
+The word `uppercase` in the interpolation binding, 
+right after the pipe operator ( | ),
+activates the built-in `UppercasePipe`.
+
+[Pipes](guide/pipes) are a good way to format strings, currency amounts, dates and other display data.
+Angular ships with several built-in pipes and you can create your own.
+
+## Edit the hero
+
+Users should be able to edit the hero name in an `<input>` textbox.
+
+The textbox should both _display_ the hero's `name` property
+and _update_ that property as the user types.
+That means data flow from the component class _out to the screen_ and
+from the screen _back to the class_.
+
+To automate that data flow, setup a two-way data binding between the `<input>` form element and the `hero.name` property.
+
+### Two-way binding
+
+Refactor the details area in the `HeroesComponent` template so it looks like this:
+
+<code-example path="toh-pt1/src/app/heroes/heroes.component.1.html" region="name-input" title="src/app/heroes/heroes.component.html (HeroesComponent's template)" linenums="false">
+
+</code-example>
+
+**[(ngModel)]** is Angular's two-way data binding syntax. 
+
+Here it binds the `hero.name` property to the HTML textbox so that data can flow _in both directions:_ from the `hero.name` property to the textbox, and from the textbox back to the `hero.name`.
+
+### The missing _FormsModule_
+
+Notice that the app stopped working when you added `[(ngModel)]`.
+
+To see the error, open the browser development tools and look in the console
+for a message like
+
+<code-example language="sh" class="code-shell">
+Template parse errors:
+Can't bind to 'ngModel' since it isn't a known property of 'input'.
+</code-example>
+
+Although `ngModel` is a valid Angular directive, it isn't available by default. 
+
+It belongs to the optional `FormsModule` and you must _opt-in_ to using it.
+
+## _AppModule_
+
+Angular needs to know how the pieces of your application fit together
+and what other files and libraries the app requires.
+This information is called _metadata_
+
+Some of the metadata is in the `@Component` decorators that you added to your component classes.
+Other critical metadata is in [`@NgModule`](guide/ngmodules) decorators.
+
+The most important `@NgModule`decorator annotates the top-level **AppModule** class.
+
+The Angular CLI generated an `AppModule` class in `src/app/app.module.ts` when it created the project.
+This is where you _opt-in_ to the `FormsModule`.
+
+### Import _FormsModule_
+
+Open `AppModule` (`app.module.ts`) and import the `FormsModule` symbol from the `@angular/forms` library. 
+
+<code-example path="toh-pt1/src/app/app.module.ts" title="app.module.ts (FormsModule symbol import)"
+ region="formsmodule-js-import">
+</code-example>
+
+Then add `FormsModule` to the `@NgModule` metadata's `imports` array, which contains a list of external modules that the app needs.
+
+<code-example path="toh-pt1/src/app/app.module.ts" title="app.module.ts ( @NgModule imports)"
+region="ng-imports">
+</code-example>
+
+When the browser refreshes, the app should work again. You can edit the hero's name and see the changes reflected immediately in the `<h2>` above the textbox.
+
+### Declare _HeroesComponent_ 
+
+Every component must be declared in _exactly one_ [NgModule](guide/ngmodules).
+
+_You_ didn't declare the `HeroesComponent`.
+So why did the application work?
+
+It worked because the Angular CLI declared `HeroesComponent` in the `AppModule` when it generated that component.
+
+Open `src/app/app.module.ts` and find `HeroesComponent` imported near the top.
+<code-example path="toh-pt1/src/app/app.module.ts" region="heroes-import" >
+</code-example>
+
+The `HeroesComponent` is declared in the `@NgModule.declarations` array.
+<code-example path="toh-pt1/src/app/app.module.ts" region="declarations">
+</code-example>
+
+Note that `AppModule`  declares both application components, `AppComponent` and `HeroesComponent`.
 
 
-## The Road Ahead
-Our Tour of Heroes only displays one hero and we really want to display a list of heroes.
-We also want to allow the user to select a hero and display their details.
-We’ll learn more about how to retrieve lists, bind them to the
-template, and allow a user to select a hero in the
-[next tutorial chapter](./toh-pt2.html).
+## Final code review
+
+Your app should look like this <live-example></live-example>. Here are the code files discussed on this page.
+
+<code-tabs>
+
+  <code-pane title="src/app/heroes/heroes.component.ts" path="toh-pt1/src/app/heroes/heroes.component.ts">
+  </code-pane>
+
+  <code-pane title="src/app/heroes/heroes.component.html" path="toh-pt1/src/app/heroes/heroes.component.html">
+  </code-pane>
+
+  <code-pane title="src/app/app.module.ts" 
+  path="toh-pt1/src/app/app.module.ts">
+  </code-pane>
+
+  <code-pane title="src/app/app.component.ts" path="toh-pt1/src/app/app.component.ts">
+  </code-pane>
+
+  <code-pane title="src/app/app.component.html" path="toh-pt1/src/app/app.component.html">
+  </code-pane>
+
+  <code-pane title="src/app/hero.ts" 
+  path="toh-pt1/src/app/hero.ts">
+  </code-pane>
+
+</code-tabs>
+
+## Summary
+
+* You used the CLI to create a second `HeroesComponent`.
+* You displayed the `HeroesComponent` by adding it to the `AppComponent` shell. 
+* You applied the `UppercasePipe` to format the name.
+* You used two-way data binding with the `ngModel` directive.
+* You learned about the `AppModule`.
+* You imported the `FormsModule` in the `AppModule` so that Angular would recognize and apply the `ngModel` directive. 
+* You learned the importance of declaring components in the `AppModule`
+and appreciated that the CLI declared it for you.

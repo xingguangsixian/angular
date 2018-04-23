@@ -1,40 +1,14 @@
-@import '~@angular/material/core/theming/all-theme';
+// import global themes
+@import '~@angular/material/theming';
 @import './ng-io-theme';
-@import './typography';
 
+// import global variables
+@import './constants';
 
-// Include material core styles.
-@include mat-core();
-@include docs-site-typography();
+// import global mixins
+@import './mixins';
 
-
-// Define the light theme.
-$primary: mat-palette($mat-cyan);
-$accent:  mat-palette($mat-amber, A200, A100, A400);
-
-$theme: mat-light-theme($primary, $accent);
-@include angular-material-theme($theme);
-
-body {
-  font-family: "Roboto","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-  margin: 0;
-}
-
-[md-button], [md-raised-button], [mat-button], [mat-raised-button] {
-  text-transform: uppercase;
-}
-
-h1, h2 {
-  font-weight: 400;
-}
-
-.docs-primary-header {
-  padding-left: 20px;
-}
-
-h1.docs-primary-header, h1 .docs-primary-header{
-    font-size: 30px;
-    font-weight: 300;
-    margin: 0;
-    padding: 30px;
-}
+// import directories
+@import './0-base/base-dir';
+@import './1-layouts/layouts-dir';
+@import './2-modules/modules-dir';

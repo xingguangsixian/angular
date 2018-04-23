@@ -29,6 +29,7 @@ function md(dir: string, folders: string[]) {
 let tscWatch: TscWatch = null;
 const platform = process.argv.length >= 3 ? process.argv[2] : null;
 const runMode: string = process.argv.length >= 4 ? process.argv[3] : null;
+const debugMode = process.argv.some(arg => arg === '--debug');
 const BaseConfig = {
   start: 'File change detected. Starting incremental compilation...',
   error: 'error',
@@ -36,19 +37,20 @@ const BaseConfig = {
 };
 
 if (platform == 'node') {
+  const specFiles = [
+    '@angular/**/*_spec.js', '@angular/compiler-cli/test/**/*_spec.js',
+    '@angular/benchpress/test/**/*_spec.js'
+  ];
   tscWatch = new TscWatch(Object.assign(
       {
-        tsconfig: 'modules/tsconfig.json',
-        onChangeCmds: [[
-          'node', 'dist/tools/cjs-jasmine', '--', '@angular/**/*_spec.js',
-          '@angular/compiler-cli/test/**/*_spec.js', '@angular/benchpress/test/**/*_spec.js'
-        ]]
+        tsconfig: 'packages/tsconfig.json',
+        onChangeCmds: [createNodeTestCommand(specFiles, debugMode)]
       },
       BaseConfig));
 } else if (platform == 'browser') {
   tscWatch = new TscWatch(Object.assign(
       {
-        tsconfig: 'modules/tsconfig.json',
+        tsconfig: 'packages/tsconfig.json',
         onStartCmds: [
           [
             'node', 'node_modules/karma/bin/karma', 'start', '--no-auto-watch', '--port=9876',
@@ -56,7 +58,7 @@ if (platform == 'node') {
           ],
           [
             'node', 'node_modules/karma/bin/karma', 'start', '--no-auto-watch', '--port=9877',
-            'modules/@angular/router/karma.conf.js'
+            'packages/router/karma.conf.js'
           ],
         ],
         onChangeCmds: [
@@ -68,11 +70,11 @@ if (platform == 'node') {
 } else if (platform == 'router') {
   tscWatch = new TscWatch(Object.assign(
       {
-        tsconfig: 'modules/tsconfig.json',
+        tsconfig: 'packages/tsconfig.json',
         onStartCmds: [
           [
             'node', 'node_modules/karma/bin/karma', 'start', '--no-auto-watch', '--port=9877',
-            'modules/@angular/router/karma.conf.js'
+            'packages/router/karma.conf.js'
           ],
         ],
         onChangeCmds: [
@@ -83,7 +85,7 @@ if (platform == 'node') {
 } else if (platform == 'browserNoRouter') {
   tscWatch = new TscWatch(Object.assign(
       {
-        tsconfig: 'modules/tsconfig.json',
+        tsconfig: 'packages/tsconfig.json',
         onStartCmds: [[
           'node', 'node_modules/karma/bin/karma', 'start', '--no-auto-watch', '--port=9876',
           'karma-js.conf.js'
@@ -91,16 +93,6 @@ if (platform == 'node') {
         onChangeCmds: [
           ['node', 'node_modules/karma/bin/karma', 'run', 'karma-js.conf.js', '--port=9876'],
         ]
-      },
-      BaseConfig));
-} else if (platform == 'tools') {
-  tscWatch = new TscWatch(Object.assign(
-      {
-        tsconfig: 'tools/tsconfig.json',
-        onChangeCmds: [[
-          'node', 'dist/tools/cjs-jasmine/index-tools', '--',
-          '@angular/tsc-wrapped/**/*{_,.}spec.js'
-        ]]
       },
       BaseConfig));
 } else {
@@ -113,4 +105,11 @@ if (runMode === 'watch') {
   tscWatch.runCmdsOnly();
 } else {
   tscWatch.run();
+}
+
+function createNodeTestCommand(specFiles: string[], debugMode: boolean) {
+  return ['node']
+      .concat(debugMode ? ['--inspect'] : [])
+      .concat('dist/tools/cjs-jasmine', '--')
+      .concat(specFiles);
 }

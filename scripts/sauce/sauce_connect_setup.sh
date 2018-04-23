@@ -1,10 +1,10 @@
 #!/bin/bash
 
-set -e -o pipefail
+set +x -u -e -o pipefail
 
 # Setup environment
-cd `dirname $0`
-source ../ci-lite/env.sh
+readonly thisDir=$(cd $(dirname $0); pwd)
+source ${thisDir}/../ci/_travis-fold.sh
 
 
 
@@ -22,9 +22,14 @@ CONNECT_URL="https://saucelabs.com/downloads/sc-${SAUCE_CONNECT_VERSION}-linux.t
 CONNECT_DIR="/tmp/sauce-connect-$RANDOM"
 CONNECT_DOWNLOAD="sc-latest-linux.tar.gz"
 
-CONNECT_LOG="$LOGS_DIR/sauce-connect"
-CONNECT_STDOUT="$LOGS_DIR/sauce-connect.stdout"
-CONNECT_STDERR="$LOGS_DIR/sauce-connect.stderr"
+# logging disabled because it seems to be overwhelming travis and causing flakes
+# when we are cat-ing the log in print-logs.sh
+# CONNECT_LOG="$LOGS_DIR/sauce-connect"
+# CONNECT_STDOUT="$LOGS_DIR/sauce-connect.stdout"
+# CONNECT_STDERR="$LOGS_DIR/sauce-connect.stderr"
+CONNECT_LOG="/dev/null"
+CONNECT_STDOUT="/dev/null"
+CONNECT_STDERR="/dev/null"
 
 # Get Connect and start it
 mkdir -p $CONNECT_DIR
@@ -46,10 +51,11 @@ if [ ! -z "$BROWSER_PROVIDER_READY_FILE" ]; then
   ARGS="$ARGS --readyfile $BROWSER_PROVIDER_READY_FILE"
 fi
 
-
+set -v
 echo "Starting Sauce Connect in the background, logging into:"
 echo "  $CONNECT_LOG"
 echo "  $CONNECT_STDOUT"
 echo "  $CONNECT_STDERR"
 sauce-connect/bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY $ARGS \
   --logfile $CONNECT_LOG 2> $CONNECT_STDERR 1> $CONNECT_STDOUT &
+set +v

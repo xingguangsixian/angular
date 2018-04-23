@@ -54,12 +54,12 @@ interface NumberConstructor {
 
 // Workaround https://github.com/Microsoft/TypeScript/issues/9193
 interface PromiseConstructor {
-  all<T>(values: (T | PromiseLike<T>)[]): Promise<T[]>;
+  all<T>(values: (T|PromiseLike<T>)[]): Promise<T[]>;
 }
 
 interface Function {
-    /**
-      * Returns the name of the function. Function names are read-only and can not be changed.
-      */
-    readonly name: string;
+  /**
+    * Returns the name of the function. Function names are read-only and can not be changed.
+    */
+  readonly name: string;
 }

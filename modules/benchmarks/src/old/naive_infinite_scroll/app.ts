@@ -25,9 +25,9 @@ import {ScrollAreaComponent} from './scroll_area';
     <div style="display: flex">
       <scroll-area id="testArea"></scroll-area>
     </div>
-    <div template="ngIf scrollAreas.length > 0">
+    <div *ngIf="scrollAreas.length > 0">
       <p>Following tables are only here to add weight to the UI:</p>
-      <scroll-area template="ngFor let scrollArea of scrollAreas"></scroll-area>
+      <scroll-area *ngFor="let scrollArea of scrollAreas"></scroll-area>
     </div>
   </div>`
 })
@@ -49,7 +49,7 @@ export class App {
     bindAction('#reset-btn', () => {
       this._getScrollDiv().scrollTop = 0;
       const existingMarker = this._locateFinishedMarker();
-      if (isPresent(existingMarker)) {
+      if (existingMarker != null) {
         DOM.removeChild(document.body, existingMarker);
       }
     });
@@ -76,7 +76,7 @@ export class App {
   // Puts a marker indicating that the test is finished.
   private _scheduleFinishedMarker() {
     const existingMarker = this._locateFinishedMarker();
-    if (isPresent(existingMarker)) {
+    if (existingMarker != null) {
       // Nothing to do, the marker is already there
       return;
     }

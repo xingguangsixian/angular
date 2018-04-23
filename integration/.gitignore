@@ -1,4 +1,3 @@
-/rxjs/
 built/
 dist/
 vendor/
@@ -6,5 +5,5 @@ vendor/
 */src/*.js
 **/*.ngfactory.ts
 **/*.ngsummary.json
-*/yarn*
-*/.yarn_local_cache*
+**/*.ngsummary.ts
+**/.yarn_local_cache*

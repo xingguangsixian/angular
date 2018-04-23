@@ -2,10 +2,9 @@
 
 cd `dirname $0`
 
-while read RAW_PACKAGE || [[ -n "$RAW_PACKAGE" ]]
-do
-  PACKAGE=${RAW_PACKAGE%$'\r'}
-  DESTDIR=./../../modules/\@angular/${PACKAGE}
-  rm ${DESTDIR}/facade
-  mv ${DESTDIR}/facade.old ${DESTDIR}/facade
-done < packages.txt
+CORE_SRC_ANIMATION_DIR=./../../packages/core/src/animation
+UPGRADE_STATIC_DIR=./../../packages/upgrade/static
+rm ${CORE_SRC_ANIMATION_DIR}/dsl.ts
+rm ${UPGRADE_STATIC_DIR}/src
+mv ${CORE_SRC_ANIMATION_DIR}/dsl.ts.old ${CORE_SRC_ANIMATION_DIR}/dsl.ts
+mv ${UPGRADE_STATIC_DIR}/src.old ${UPGRADE_STATIC_DIR}/src
